@@ -18,6 +18,9 @@ export default ({ content }) => {
                                 </div>
                             </div>
                             <div className="col-lg-10 my-2">
+                                <div className="d-flex justify-content-center justify-content-lg-start">
+                                    <h4 >Username</h4>
+                                </div>
                                 <p style={{ textAlign: "justify" }}>
                                     {content}
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis sapien 
@@ -44,21 +47,21 @@ export default ({ content }) => {
             </div>
 
             {/* Modal  */}
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Edit comment</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div className="modal fade" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Edit comment</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             ...
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-success">Save changes</button>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-success">Save changes</button>
                         </div>
                     </div>
                 </div>

@@ -1,8 +1,8 @@
 import React from 'react'
-import Comment from '../components/coment'
-import { useForm } from '../hocks/useForm'
+import Comment from '../../components/comment'
+import { useForm } from '../../hocks/useForm'
 import { Link } from 'react-router-dom'
-import '../styles/homeGrid.modules.css'
+import './home.modules.css'
 
 export default (props) => {
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Comment from '../components/coment'
+import Comment from '../components/comment'
 
 export default () => {
 

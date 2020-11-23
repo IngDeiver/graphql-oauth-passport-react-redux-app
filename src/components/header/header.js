@@ -1,10 +1,9 @@
 import React from 'react'
-import { Link, useRouteMatch } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import logo from './logo.png';
 
 export default () => {
-    let match = useRouteMatch();
-    console.log(match);
+    let location = useLocation();
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <Link className="navbar-brand" to="/">
@@ -16,10 +15,10 @@ export default () => {
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
-                    <li className={`nav-item ${match.url === "/" ? 'active':''}`}>
+                    <li className={`nav-item ${location.pathname === "/" ? 'active':''}`}>
                         <Link className="nav-link" to="/">Home </Link>
                     </li>
-                    <li className={`nav-item ${match.url === "/comments" ? 'active':''}`}>
+                    <li className={`nav-item ${location.pathname === "/comments" ? 'active':''}`}>
                         <Link className="nav-link" to="/comments">Comments</Link>
                     </li>
                 </ul>

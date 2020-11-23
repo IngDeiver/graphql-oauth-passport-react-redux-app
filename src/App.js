@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import Comments from "./pages/comments"
-import Home from "./pages/home"
+import Home from "./pages/home/home"
 import Header from "./components/header/header"
 import Login from "./pages/login"
 
