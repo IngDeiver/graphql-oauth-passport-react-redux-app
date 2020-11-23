@@ -1,0 +1,11 @@
+
+/* lg */
+@media only screen and (min-width: 768px){
+    .comment-input{
+        position: fixed;
+    }
+    .comment-list{
+        position: absolute;
+        right:0px;
+    }
+}

@@ -1,3 +1,12 @@
 import React from 'react'
 
-export default () => (<p>Comments</p>)
+import Comment from '../components/coment'
+
+export default () => {
+
+    return(
+        <div className="container" style={{marginTop:"100px"}}>
+            <Comment/><Comment/><Comment/><Comment/><Comment/>
+        </div>
+    )
+}
