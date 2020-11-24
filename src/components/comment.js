@@ -2,9 +2,32 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { useForm } from '../hocks/useForm'
+import {useSelector, useDispatch}  from 'react-redux'
+import {commentUpdate} from '../redux/actions/commentActions'
 
+const selectCommentById = (state, commentId) => {
+    return state.comments.find(comment => comment._id === commentId)
+}
 
-export default ({ content }) => {
+export default ({ commentId }) => {
+
+    const dispatch = useDispatch()
+    // get comment by id
+    const comment = useSelector(state => selectCommentById(state, commentId))
+
+    const initialValues = {
+        content: comment.content
+    }
+    const form = useForm({ initialValues })
+
+    const updateComment = () => {
+        dispatch(commentUpdate(comment._id, form.fields.content))
+    }
+
+    const cancelUpdateComment = ()  => {
+        form.setValueToField('content', comment.content)
+    }
 
     return (
         <div className="mb-5">
@@ -19,16 +42,11 @@ export default ({ content }) => {
                             </div>
                             <div className="col-lg-10 my-2">
                                 <div className="d-flex justify-content-center justify-content-lg-start">
-                                    <h4 >Username</h4>
+                                    <h4 >{comment.owner.username}</h4>
                                 </div>
                                 <p style={{ textAlign: "justify" }}>
-                                    {content}
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis sapien 
-                                    nunc. Maecenas libero tellus, ultricies et felis a, luctus ultricies nisi. 
-                                    Morbi id condimentum elit. Ut ex augue, bibendum et mattis sed, iaculis at elit. 
-                                    Ut porttitor nunc sapien, sit amet molestie quam consectetur quis. 
-                                    
-                            </p>
+                                    {comment.content}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -57,11 +75,19 @@ export default ({ content }) => {
                             </button>
                         </div>
                         <div className="modal-body">
-                            ...
+                            <textarea rows="4" cols="50" className="form-control my-2"
+                                {...form.getInput('content')}>
+                            </textarea>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-success">Save changes</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal"
+                                onClick={cancelUpdateComment}>
+                                Cancel
+                            </button>
+                            <button onClick={updateComment} type="button" className="btn btn-success"
+                                disabled={form.fields.content === ""}>
+                                Save changes
+                            </button>
                         </div>
                     </div>
                 </div>

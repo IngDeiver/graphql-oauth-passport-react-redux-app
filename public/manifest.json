@@ -1,6 +1,6 @@
 {
   "short_name": "React App",
-  "name": "Create React App Sample",
+  "name": "React OAuth 2.0 client app",
   "icons": [
     {
       "src": "favicon.ico",

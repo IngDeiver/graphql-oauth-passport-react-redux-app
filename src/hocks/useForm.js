@@ -22,13 +22,18 @@ export const useForm = ({initialValues}) => {
         setFields({...newFields})
     }
 
+    const setValueToField = (name, value) => {
+        setFields({...fields, [name]:value})
+    }
+
     return  {
         fields,
         addField,
         removeField,
+        setValueToField,
         getInput: (name) => ({name, value:fields[name], onChange}),
         getCheckbox: (name) => ({name, checked:fields[name], onChange}),
         getRadio: (name, value) => ({name, value, checked:fields[name] === value, onChange}),
-        getSelect: (name) => ({name, value:fields[name], onChange})
+        getSelect: (name) => ({name, value:fields[name], onChange}),
     }
 }

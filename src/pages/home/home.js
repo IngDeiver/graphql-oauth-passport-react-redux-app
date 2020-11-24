@@ -3,14 +3,29 @@ import Comment from '../../components/comment'
 import { useForm } from '../../hocks/useForm'
 import { Link } from 'react-router-dom'
 import './home.modules.css'
+import {useSelector, useDispatch, shallowEqual }  from 'react-redux'
+import {saveComment} from '../../services/commentService'
 
-export default (props) => {
+
+export default () => {
+
+    const dispatch = useDispatch()
 
     const initialValues = {
         content: ""
     }
-
     const form = useForm({ initialValues })
+
+    // selector function
+    const selectCommentsIds = state => state.comments.map(comment => comment._id)
+    const commentsIds = useSelector(selectCommentsIds, shallowEqual)
+
+
+    const addComment = () => {
+        dispatch(saveComment(form.fields.content))
+        form.setValueToField('content',"")
+    }
+
     return (
         <div className="container-fluid  mb-3" style={{ marginTop: "100px" }}>
             <div className="d-flex flex-column flex-md-row position-relative">
@@ -27,22 +42,25 @@ export default (props) => {
                         <textarea rows="4" cols="50" className="form-control my-2"
                             {...form.getInput('content')}>
                             Write a comment..
-                                    </textarea>
+                        </textarea>
                         <button disabled={form.fields.content === ""}
+                            onClick={addComment}
                             className="btn btn-block btn-success">
                             Publish
-                                    </button>
+                        </button>
                     </div>
                     <div className="text-center mb-4">
                         <Link to="/login">
                             Login to publish
-                                </Link>
+                        </Link>
                     </div>
                 </div>
                 <div className="comment-list col-12 col-md-8">
                     <div className=" mx-3" >
-                        <Comment />
-                        <Comment /><Comment /><Comment /><Comment /><Comment /><Comment /><Comment />
+                        {commentsIds.length == 0 && <p className="text-center mx-5 my-5">
+                            No comments, be the first to post something!
+                        </p>}
+                        {commentsIds.map((commentId, i) => <Comment key={i} commentId={commentId}/>)}
                     </div>
                 </div>
             </div>

@@ -1,9 +1,14 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import logo from './logo.png';
+import {fetchCommentsThunk} from '../../services/commentService'
+import {useDispatch} from 'react-redux'
 
 export default () => {
     let location = useLocation();
+    const dispatch = useDispatch()
+    dispatch(fetchCommentsThunk())
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <Link className="navbar-brand" to="/">
