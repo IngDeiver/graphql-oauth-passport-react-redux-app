@@ -2,20 +2,22 @@ import React from 'react'
 
 import {
     BrowserRouter as Router,
-    Route,
-    Redirect,
-    Link
+    Route
 } from "react-router-dom";
 
 import Comments from "./pages/comments"
 import Home from "./pages/home/home"
 import Header from "./components/header/header"
 import Login from "./pages/login"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector , shallowEqual} from "react-redux"
 import Register from './pages/register'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProtectedRoute from './middlewares/auhtMiddleware'
+import { unwrapResult } from '@reduxjs/toolkit'
+import messageAction from './redux/actions/messageAction'
+import { fetchUserThunk } from './redux/thunks/userThunks'
 
 
 // import store from './redux/store'
@@ -32,38 +34,24 @@ const notify = ({ message, type }) => toast(message, {
     type
 });
 
-const getUser = async () => {
-    const user = await localStorage.getItem("user")
-    return user
-}
 
-const PrivateRoute = ({ children, ...rest }) => {
-    let auth = getUser()
-    return (
-        <Route
-            {...rest}
-            render={({ location }) =>
-                auth ? (
-                    children
-                ) : (
-                        <div className="container" style={{ marginTop: "100px" }}>
-                            <div className="card" >
-                            <div className="card-body d-flex  flex-column jutify-content-center align-items-center">
-                                <p className="text-center my-2">To see the content of this page log in</p>
-                                <Link className="text-center my-2" to="/login">Login</Link>
-                            </div>
-                        </div>
-                        </div>
-                    )
-            }
-        />
-    );
-}
 
 export default () => {
     console.log("Render App.js");
+    const dispatch = useDispatch()
+   
+
+    // load user
+    dispatch(fetchUserThunk())
+    .then(unwrapResult)
+    .catch(err => dispatch(messageAction({message:`Eror to load session: ${err.message}`, type:"error"})))
+
+
     const message = useSelector(state => state.message)
     if (message) notify(message)
+
+    const user = useSelector(state => state.user, shallowEqual)
+    
 
     return (
         <Router>
@@ -71,9 +59,12 @@ export default () => {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Register} />
-            <PrivateRoute exact path="/comments" >
-                <Comments />
-            </PrivateRoute>
+            <ProtectedRoute
+              exact
+              path="/comments"
+              user={user}
+              component={Comments}
+            />
             <ToastContainer position="bottom-center" />
         </Router>
     )

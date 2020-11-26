@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link, useLocation, useHistory} from 'react-router-dom'
 import logo from './logo.png';
 import { fetchCommentsThunk } from '../../redux/thunks/commentThunks'
-import { fetchUserThunk, logoutThunk } from '../../redux/thunks/userThunks'
+import { logoutThunk } from '../../redux/thunks/userThunks'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 import { useApolloClient } from '@apollo/client';
 import { unwrapResult } from '@reduxjs/toolkit'
@@ -22,9 +22,7 @@ export default () => {
     .then(unwrapResult)
     .catch(err => dispatch(messageAction({message:`Error to load data: ${err.message}`, type:"error"})))
     
-    dispatch(fetchUserThunk())
-    .then(unwrapResult)
-    .catch(err => dispatch(messageAction({message:`Eror to load session: ${err.message}`, type:"error"})))
+   
 
     const user = useSelector(state => state.user, shallowEqual)
 
