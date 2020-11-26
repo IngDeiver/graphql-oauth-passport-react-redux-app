@@ -39,6 +39,7 @@ export const fetchCommentsThunk = createAsyncThunk("comment/fecthComments", asyn
                     content
                     owner{
                         username
+                        avatar
                     }
                 }
             }`;
@@ -71,9 +72,10 @@ export const saveCommentThunk = createAsyncThunk("comment/addComment", async ({ 
                 addComment(comment:$comment){
                     _id
                     content
-                    owner{
+                    owner {
                         username
-                    }
+                        avatar
+                      }
                 }
             }
         `;
@@ -81,5 +83,5 @@ export const saveCommentThunk = createAsyncThunk("comment/addComment", async ({ 
             mutation: ADD_COMMENT,
             variables: { comment: { content } }
         })
-        return response.data 
+        return response.data.addComment
 })

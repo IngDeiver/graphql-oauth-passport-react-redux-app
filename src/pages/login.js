@@ -48,7 +48,7 @@ export default () => {
             apolloClient
         }))
         .then(unwrapResult)
-        .then(user =>  createLocalAuth("owner", { accessToken:user.accessToken, username: user.username, avatar: null },
+        .then(user =>  createLocalAuth("owner", { accessToken:user.acces_token, username: user.username, avatar: user.avatar },
         history, dispatch))
         .catch(err => dispatch(messageAction({ message: `Auth eror: ${err.message}`, type: "error" })))
     }

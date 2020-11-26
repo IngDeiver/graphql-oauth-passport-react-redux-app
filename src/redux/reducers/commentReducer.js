@@ -1,6 +1,6 @@
 // import { COMMENT_ADDED, COMMENT_UPDATE, COMMENT_LOAD } from "../types/commentTypes";
 import { createSlice } from '@reduxjs/toolkit'
-import {fetchCommentsThunk} from '../../redux/thunks/commentThunks'
+import {fetchCommentsThunk, saveCommentThunk} from '../../redux/thunks/commentThunks'
 
 
 const initialState = []
@@ -72,15 +72,13 @@ export const commentReducer = createSlice({
      prexi/action.fulfilled
      prexi/action.rejected*/
     extraReducers: builder => {
-        builder.addCase(fetchCommentsThunk.pending, (state, action) => {
-            // logic for show loading 
-        })
+        builder
         .addCase(fetchCommentsThunk.fulfilled, (state, action) => {
             // logic for when succes request
             return action.payload
         })
-        .addCase(fetchCommentsThunk.rejected, (state, action) => {
-            // logic for when fail request
+        .addCase(saveCommentThunk.fulfilled, (state, action) => {
+            state.push(action.payload)
         })
     }
 })

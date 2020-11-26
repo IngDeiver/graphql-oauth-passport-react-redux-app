@@ -7,6 +7,7 @@ export const loginThunk = createAsyncThunk("user/loginUser", async ({ user, apol
             login(username: $username, password: $password){
                   username
                   acces_token
+                  avatar
                 }
         }`;
     const response = await apolloClient.query({
@@ -26,6 +27,7 @@ export const registerThunk = createAsyncThunk("user/registerUser", async ({ user
             register(user: $user){
                   username
                   acces_token
+                  avatar
                 }
         }`;
     const response = await apolloClient.query({
