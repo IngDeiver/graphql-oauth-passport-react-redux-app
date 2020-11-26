@@ -39,7 +39,7 @@ export default () => {
     }
 
     const failureGoogle = (err) => {
-        dispatch(messageAction({ message: `Google auth eror: ${err}`, type: "error" }))
+        dispatch(messageAction({ message: `Google auth eror: ${err.error}`, type: "error" }))
     }
 
     const loginWithUsernameAndPassword = () => {

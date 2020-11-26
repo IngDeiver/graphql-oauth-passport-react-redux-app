@@ -1,12 +1,32 @@
 import uris from '../config/uris.json'
 import { ApolloClient, HttpLink, ApolloLink, InMemoryCache, from } from '@apollo/client';
+import ls from '../util/secureLS'
+import secrets from '../config/secrets.json'
 
 const httpLink = new HttpLink({ uri: uris["graphql-server"] });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
   operation.setContext(({ headers = {} }) => {
-    const {accessToken, provider} = JSON.parse(localStorage.getItem('user')) || {}
+    const AUTH_UUID = ls.get(secrets["session-key"]) // Get UUID value
+    if(!AUTH_UUID){
+      return {
+        headers: {
+          ...headers
+        }
+      }
+    }
+
+    const user =  ls.get([AUTH_UUID]) // Get user with UUID respective
+    if(!user){
+      return {
+        headers: {
+          ...headers
+        }
+      }
+    }
+
+    const {accessToken, provider} = user
     return {
       headers: {
         ...headers,

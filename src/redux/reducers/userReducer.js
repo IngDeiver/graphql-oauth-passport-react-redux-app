@@ -16,13 +16,11 @@ export const userReducer = createSlice({
     extraReducers: builder => {
         builder
         .addCase(loginThunk.fulfilled, (state, action) => {
-            console.log("Login user:", action);
             return {
                 ...action.payload
             } 
         })
         .addCase(logoutThunk.fulfilled, (state, action) => {
-            console.log("Logout user:", action);
             return {
                
             } 
@@ -33,7 +31,7 @@ export const userReducer = createSlice({
             } 
         })
         .addCase(fetchUserThunk.rejected, (state, action) => {
-            console.log("Failed to load session:",action)
+            console.log("Failed to load session:",action.error)
             return {
                 
             } 

@@ -48,8 +48,9 @@ export default () => {
 
 
     const message = useSelector(state => state.message)
-    if (message) notify(message)
+    if (message.type) notify(message)
 
+    
     const user = useSelector(state => state.user, shallowEqual)
     
 
@@ -65,7 +66,7 @@ export default () => {
               user={user}
               component={Comments}
             />
-            <ToastContainer position="bottom-center" />
+            <ToastContainer position="bottom-center" limit={2}/>
         </Router>
     )
 }

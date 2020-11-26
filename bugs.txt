@@ -1,3 +1,4 @@
 - Re renders
 - Error handler
 - Secure local auth
+- Fb error profile

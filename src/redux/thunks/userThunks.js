@@ -1,5 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { gql } from '@apollo/client';
+import ls from '../../util/secureLS'
+import secrets from '../../config/secrets.json'
 
 export const loginThunk = createAsyncThunk("user/loginUser", async ({ user, apolloClient }) => {
     const LOGIN = gql`
@@ -17,7 +19,6 @@ export const loginThunk = createAsyncThunk("user/loginUser", async ({ user, apol
             password: user.password
         }
     })
-    console.log(response);
     return response.data.login
 })
 
@@ -39,16 +40,18 @@ export const registerThunk = createAsyncThunk("user/registerUser", async ({ user
             }
         }
     })
-    console.log(response);
     return response.data.register
 })
 
 export const logoutThunk = createAsyncThunk("user/logoutUser", async () => {
-    await localStorage.removeItem("user")
+    await ls.removeAll()
     return true
 })
 
 export const fetchUserThunk = createAsyncThunk("user/fecthUser", async () => {
-    const user = await localStorage.getItem("user")
-    return JSON.parse(user)
+    const AUTH_UUID = await ls.get(secrets["session-key"]) // Get UUID value
+    if(!AUTH_UUID) return null
+    const user = await ls.get(AUTH_UUID) // Get user with UUID respective
+    if(!user) return null
+    return user
 })
