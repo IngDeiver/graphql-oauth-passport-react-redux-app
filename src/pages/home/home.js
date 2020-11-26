@@ -4,10 +4,14 @@ import { useForm } from '../../hocks/useForm'
 import { Link } from 'react-router-dom'
 import './home.modules.css'
 import {useSelector, useDispatch, shallowEqual }  from 'react-redux'
-import {saveComment} from '../../services/commentService'
-
+import {saveCommentThunk} from '../../redux/thunks/commentThunks'
+import {useApolloClient} from '@apollo/client';
+import { unwrapResult } from '@reduxjs/toolkit'
+import messageAction from '../../redux/actions/messageAction'
 
 export default () => {
+    console.log("Render Home.js");
+    const apolloClient = useApolloClient()
 
     const dispatch = useDispatch()
 
@@ -21,9 +25,11 @@ export default () => {
     const commentsIds = useSelector(selectCommentsIds, shallowEqual)
 
 
-    const addComment = () => {
-        dispatch(saveComment(form.fields.content))
-        form.setValueToField('content',"")
+    const addComment = async() => {
+        dispatch(saveCommentThunk({content:form.fields.content, apolloClient}))
+        .then(unwrapResult)
+        .then(res => form.setValueToField('content',''))
+        .catch(err => dispatch(messageAction({message:`Post error: ${err.message}`, type:"error"})))
     }
 
     return (

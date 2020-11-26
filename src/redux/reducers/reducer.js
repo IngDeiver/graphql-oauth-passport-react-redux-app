@@ -3,10 +3,10 @@ import {combineReducers} from 'redux'
 //coposition reducer 
 import comments from './commentReducer'
 import user from './userReducer'
-import error from './errorReducer'
+import message from './messageReducer'
 
 export default combineReducers({
     user,
     comments,
-    error
+    message
 })

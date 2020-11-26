@@ -4,7 +4,7 @@
 // import thunkMiddleware from 'redux-thunk'
 import { configureStore } from '@reduxjs/toolkit'
 import commentReducer from './reducers/commentReducer'
-import errorReducer from './reducers/errorReducer'
+import messageReducer from './reducers/messageReducer'
 import userReducer from './reducers/userReducer'
 
 // Can read from local store
@@ -30,6 +30,6 @@ export default configureStore({
     reducer:{
         comments: commentReducer,
         user: userReducer,
-        error:errorReducer
+        message:messageReducer
     }
 })

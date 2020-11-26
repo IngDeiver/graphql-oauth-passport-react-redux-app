@@ -6,7 +6,7 @@ export default () => {
 
     return(
         <div className="container" style={{marginTop:"100px"}}>
-            <Comment/><Comment/><Comment/><Comment/><Comment/>
+            {/* <Comment/><Comment/><Comment/><Comment/><Comment/> */}
         </div>
     )
 }

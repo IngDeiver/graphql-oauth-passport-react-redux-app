@@ -1,0 +1,4 @@
+- Re renders
+- Error handler
+- Secure local auth
+- Protected routes

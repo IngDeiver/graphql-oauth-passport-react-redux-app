@@ -1,13 +1,13 @@
-import ERROR_THROW from '../types/erroType'
+import MESSAGE_THROW from '../types/messageType'
 
-const initialState = {error: null}
+const initialState = {}
 export default (state = initialState, {type, payload}) => {
     switch(type){
-        case ERROR_THROW : {
-            console.log("Global error: ", payload);
+        case MESSAGE_THROW : {
             return {
                 ...state,
-                error: payload
+                message: payload.message,
+                type: payload.type
             }
         }
         default:

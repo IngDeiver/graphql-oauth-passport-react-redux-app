@@ -1,6 +1,6 @@
 // import { COMMENT_ADDED, COMMENT_UPDATE, COMMENT_LOAD } from "../types/commentTypes";
 import { createSlice } from '@reduxjs/toolkit'
-import {fetchCommentsThunk} from '../../services/commentService'
+import {fetchCommentsThunk} from '../../redux/thunks/commentThunks'
 
 
 const initialState = []
@@ -50,7 +50,6 @@ export const commentReducer = createSlice({
         // Prepare acept add multiple params then join in paylod
         commentUpdate:{
             reducer(state, action){
-                console.log("Redcur with prepare: ", action);
                 const comment = state.find(comment => comment._id == action.payload.commentId)
                 comment.content = action.payload.content
             },
@@ -78,12 +77,10 @@ export const commentReducer = createSlice({
         })
         .addCase(fetchCommentsThunk.fulfilled, (state, action) => {
             // logic for when succes request
-            console.log("fulfilled in load comments with")
             return action.payload
         })
         .addCase(fetchCommentsThunk.rejected, (state, action) => {
             // logic for when fail request
-            console.log("Error in load comments with createAsyncThunk: ", action.payload)
         })
     }
 })

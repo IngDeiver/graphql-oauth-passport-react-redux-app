@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { useForm } from '../hocks/useForm'
 import {useSelector, useDispatch}  from 'react-redux'
 import {commentUpdate} from '../redux/actions/commentActions'
+import {useApolloClient} from '@apollo/client';
+
+
 
 const selectCommentById = (state, commentId) => {
     return state.comments.find(comment => comment._id === commentId)
@@ -12,6 +15,8 @@ const selectCommentById = (state, commentId) => {
 
 export default ({ commentId }) => {
 
+    console.log("Render Comment.js");
+    const apolloClient = useApolloClient()
     const dispatch = useDispatch()
     // get comment by id
     const comment = useSelector(state => selectCommentById(state, commentId))
@@ -29,6 +34,7 @@ export default ({ commentId }) => {
         form.setValueToField('content', comment.content)
     }
 
+    useEffect(() =>{}, [comment])
     return (
         <div className="mb-5">
             <div style={{ borderRadius: "10px" }}>
