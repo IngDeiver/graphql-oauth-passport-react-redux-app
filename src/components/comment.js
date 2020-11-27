@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { useForm } from '../hocks/useForm'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
-import { commentUpdate } from '../redux/actions/commentActions'
 import { useApolloClient } from '@apollo/client';
+import {removeCommentThunk, updateCommentThunk} from '../redux/thunks/commentThunks'
+import { unwrapResult } from '@reduxjs/toolkit'
+import {throwMessageAction} from '../redux/actions/messageAction'
+import $ from 'jquery'
 
 
 
@@ -13,30 +16,50 @@ const selectCommentById = (state, commentId) => {
     return state.comments.find(comment => comment._id === commentId)
 }
 
-export default ({ commentId }) => {
+export default React.memo(({ commentId }) => {
 
     console.log("Render Comment.js");
+    // declare hocks
     const apolloClient = useApolloClient()
     const dispatch = useDispatch()
-    // get comment by id
-    const comment = useSelector(state => selectCommentById(state, commentId))
 
+    // get data from state
+    const comment = useSelector(state => selectCommentById(state, commentId))
+    const user = useSelector(state => state.user, shallowEqual)
+    
+    // form
     const initialValues = {
         content: comment.content
     }
     const form = useForm({ initialValues })
 
+    // methods
     const updateComment = () => {
-        dispatch(commentUpdate(comment._id, form.fields.content))
+        dispatch(updateCommentThunk({commentId:commentId, content: form.fields.content, apolloClient}))
+        .then(unwrapResult)
+        .then(res => {
+            dispatch(throwMessageAction({ message: `Comment update`, type: "info" }))
+            $("#editCommentModal").modal('hide')
+        })
+        .catch(err => dispatch(throwMessageAction({ message: `Update error: ${err.message}`, type: "error" })))
     }
 
     const cancelUpdateComment = () => {
-        form.setValueToField('content', comment.content)
+        if(form.fields.content !== comment.content){
+            form.setValueToField('content', comment.content)
+        }
     }
 
-    const user = useSelector(state => state.user, shallowEqual)
+    const removeComment = () => {
+        dispatch(removeCommentThunk({commentId:commentId, apolloClient}))
+        .then(unwrapResult)
+        .then(res => dispatch(throwMessageAction({ message: `Comment removed`, type: "info" })))
+        .catch(err => dispatch(throwMessageAction({ message: `Remove error: ${err.message}`, type: "error" })))
+    }
 
-    useEffect(() => { }, [comment, user])
+   
+
+    
     return (
         <div className="mb-5">
             <div style={{ borderRadius: "10px" }}>
@@ -61,11 +84,13 @@ export default ({ commentId }) => {
                     {user.username === comment.owner.username && (
                         <div className="card-footer">
                             <div className="d-flex flex-row-reverse">
-                                <button className="btn btn-danger ml-3">
+                                <button className="btn btn-danger ml-3" 
+                                onClick={removeComment}>
                                     <FontAwesomeIcon icon={faTrashAlt} color="white" />
                                 </button>
                                 <button className="btn btn-warning"
-                                    data-toggle="modal" data-target="#exampleModal">
+                                    onClick={() => console.log(comment)}
+                                    data-toggle="modal" data-target="#editCommentModal">
                                     <FontAwesomeIcon icon={faEdit} color="white" />
                                 </button>
                             </div>
@@ -75,7 +100,7 @@ export default ({ commentId }) => {
             </div>
 
             {/* Modal  */}
-            <div className="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="editCommentModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -104,4 +129,4 @@ export default ({ commentId }) => {
             </div>
         </div>
     )
-}
+})

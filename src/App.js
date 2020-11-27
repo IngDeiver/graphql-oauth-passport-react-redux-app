@@ -12,12 +12,13 @@ import Login from "./pages/login"
 import { useDispatch, useSelector , shallowEqual} from "react-redux"
 import Register from './pages/register'
 
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoute from './middlewares/auhtMiddleware'
 import { unwrapResult } from '@reduxjs/toolkit'
-import messageAction from './redux/actions/messageAction'
+import {throwMessageAction} from './redux/actions/messageAction'
 import { fetchUserThunk } from './redux/thunks/userThunks'
+import { fetchCommentsThunk } from './redux/thunks/commentThunks'
+import { useApolloClient } from '@apollo/client'
 
 
 // import store from './redux/store'
@@ -29,29 +30,28 @@ import { fetchUserThunk } from './redux/thunks/userThunks'
 //     )
 // store.dispatch(commentAdded({_id:"id", content:"Comment Added", owner:{username:"Fake username added"}}))
 
-const notify = ({ message, type }) => toast(message, {
-    hideProgressBar: true,
-    type
-});
 
 
 
 export default () => {
     console.log("Render App.js");
+    // declare hocks
     const dispatch = useDispatch()
-   
+    const apolloClient = useApolloClient()
 
-    // load user
+    // load data
     dispatch(fetchUserThunk())
     .then(unwrapResult)
-    .catch(err => dispatch(messageAction({message:`Eror to load session: ${err.message}`, type:"error"})))
+    .catch(err => dispatch(throwMessageAction({message:`Eror to load session: ${err.message}`, type:"error"})))
 
+    dispatch(fetchCommentsThunk({ apolloClient }))
+    .then(unwrapResult)
+    .catch(err => dispatch(throwMessageAction({message:`Error to load data: ${err.message}`, type:"error"})))
 
-    const message = useSelector(state => state.message)
-    if (message.type) notify(message)
-
-    
+    // get data from state
     const user = useSelector(state => state.user, shallowEqual)
+    
+    
     
 
     return (
@@ -66,7 +66,6 @@ export default () => {
               user={user}
               component={Comments}
             />
-            <ToastContainer position="bottom-center" limit={2}/>
         </Router>
     )
 }

@@ -1,8 +1,20 @@
-import MESSAGE_THROW from '../types/messageType'
+import {MESSAGE_THROW, CLEAR_MESSAGE} from '../types/messageType'
 
-export default (error) => (
+const throwMessageAction = (error) => (
     {
         type:MESSAGE_THROW,
         payload:error
     }
 )
+
+const clearMessageAction = () => (
+    {
+        type:CLEAR_MESSAGE,
+        payload:{}
+    }
+)
+
+export {
+    throwMessageAction,
+    clearMessageAction
+}

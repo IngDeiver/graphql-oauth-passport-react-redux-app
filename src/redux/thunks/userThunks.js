@@ -13,7 +13,7 @@ export const loginThunk = createAsyncThunk("user/loginUser", async ({ user, apol
                 }
         }`;
     const response = await apolloClient.query({
-        query: LOGIN, 
+        query: LOGIN,
         variables: {
             username: user.username,
             password: user.password
@@ -32,9 +32,9 @@ export const registerThunk = createAsyncThunk("user/registerUser", async ({ user
                 }
         }`;
     const response = await apolloClient.query({
-        query: REGSITER, 
+        query: REGSITER,
         variables: {
-            user:{
+            user: {
                 username: user.username,
                 password: user.password
             }
@@ -50,8 +50,8 @@ export const logoutThunk = createAsyncThunk("user/logoutUser", async () => {
 
 export const fetchUserThunk = createAsyncThunk("user/fecthUser", async () => {
     const AUTH_UUID = await ls.get(secrets["session-key"]) // Get UUID value
-    if(!AUTH_UUID) return null
+    if (!AUTH_UUID) return null
     const user = await ls.get(AUTH_UUID) // Get user with UUID respective
-    if(!user) return null
+    if (!user) return null
     return user
 })

@@ -1,12 +1,13 @@
 import React from 'react'
 import { useForm } from '../hocks/useForm'
 import { useHistory, Link } from "react-router-dom";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import { registerThunk } from '../redux/thunks/userThunks'
 import { useApolloClient } from '@apollo/client';
 import { unwrapResult } from '@reduxjs/toolkit'
 import {createLocalAuth} from '../util/authUtil'
-import messageAction from '../redux/actions/messageAction'
+import {throwMessageAction} from '../redux/actions/messageAction'
+import notify from '../util/notify'
 
 
 export default () => {
@@ -21,6 +22,10 @@ export default () => {
     const history = useHistory();
     const apolloClient = useApolloClient()
 
+    // get data from state
+    const message = useSelector(state => state.message)
+    if (message.type) notify(message, dispatch)
+
     const register = () => {
         dispatch(registerThunk({
             user: { username: form.fields.username, password: form.fields.password },
@@ -29,7 +34,7 @@ export default () => {
         .then(unwrapResult)
         .then(user =>  createLocalAuth("owner", { accessToken:user.acces_token, username: user.username, avatar: user.avatar },
         history, dispatch))
-        .catch(err => dispatch(messageAction({ message: `Auth eror: ${err.message}`, type: "error" })))
+        .catch(err => dispatch(throwMessageAction({ message: `Auth eror: ${err.message}`, type: "error" })))
     }
 
     return (

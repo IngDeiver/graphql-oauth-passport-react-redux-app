@@ -1,4 +1,4 @@
-import messageAction from '../redux/actions/messageAction'
+import {throwMessageAction} from '../redux/actions/messageAction'
 import { userLogin } from '../redux/actions/userActions'
 import ls from '../util/secureLS'
 import { v4 as uuidv4 } from 'uuid';
@@ -15,10 +15,10 @@ export  const createLocalAuth = async (provider, user, history, dispatch) => {
         ls.set([AUTH_UUID_BASE64], user) // Save user auth with key of UUID
         
         dispatch(userLogin(user))
-        dispatch(messageAction({ message: `Welcome  ${user.username}`, type: "info" }))
+        dispatch(throwMessageAction({ message: `Welcome  ${user.username}`, type: "info" }))
         history.push("/")
         
     } catch (err) {
-        dispatch(messageAction({ message: `Auth eror: ${err.message}`, type: "error" }))
+        dispatch(throwMessageAction({ message: `Auth eror: ${err.message}`, type: "error" }))
     }
 }

@@ -1,6 +1,10 @@
 // import { COMMENT_ADDED, COMMENT_UPDATE, COMMENT_LOAD } from "../types/commentTypes";
 import { createSlice } from '@reduxjs/toolkit'
-import {fetchCommentsThunk, saveCommentThunk} from '../../redux/thunks/commentThunks'
+import {
+    fetchCommentsThunk, saveCommentThunk,
+    removeCommentThunk, updateCommentThunk
+}
+    from '../../redux/thunks/commentThunks'
 
 
 const initialState = []
@@ -39,16 +43,16 @@ const initialState = []
 // now not is necesary create action becasue createSlice create the actions
 export const commentReducer = createSlice({
     // is action type prefix
-    name:"comment" ,
+    name: "comment",
     initialState,
-    reducers:{
+    reducers: {
         // is action type
-        commentAdded(state, action){
+        commentAdded(state, action) {
             // Now acept mutation with create slice beaces create slice used Immer
             state.push(action.payload)
         },
         // Prepare acept add multiple params then join in paylod
-        commentUpdate:{
+        /*commentUpdate:{
             reducer(state, action){
                 const comment = state.find(comment => comment._id == action.payload.commentId)
                 comment.content = action.payload.content
@@ -58,28 +62,39 @@ export const commentReducer = createSlice({
                     payload: {commentId, content}
                 }
             }
-        },
-        commentRemove(state, action){
+        },*/
+        commentRemove(state, action) {
             state = state.filter(comment => comment._id !== action.payload._id)
         },
-         /*Without extraReducers option and manual thunk function
-        commentLoad(state, action){
-            return action.payload
-        },*/
+        /*Without extraReducers option and manual thunk function
+       commentLoad(state, action){
+           return action.payload
+       },*/
     },
-     /*extraReducers use a thunk function created with createAsyncThunk  and listen the nex actions
-     prexi/action.pending
-     prexi/action.fulfilled
-     prexi/action.rejected*/
+    /*extraReducers use a thunk function created with createAsyncThunk  and listen the nex actions
+    prefix/action.pending
+    prefix/action.fulfilled
+    prefix/action.rejected*/
     extraReducers: builder => {
         builder
-        .addCase(fetchCommentsThunk.fulfilled, (state, action) => {
-            // logic for when succes request
-            return action.payload
-        })
-        .addCase(saveCommentThunk.fulfilled, (state, action) => {
-            state.push(action.payload)
-        })
+            .addCase(fetchCommentsThunk.fulfilled, (state, action) => {
+                // logic for when succes request
+                return action.payload
+            })
+            .addCase(fetchCommentsThunk.rejected, (state, action) => {
+                return []
+            })
+            .addCase(saveCommentThunk.fulfilled, (state, action) => {
+                state.push(action.payload)
+            })
+            .addCase(removeCommentThunk.fulfilled, (state, action) => {
+                const newState = state.filter(comment => comment._id !== action.payload._id)
+                return newState
+            })
+            .addCase(updateCommentThunk.fulfilled, (state, action) => {
+                const comment = state.find(comment => comment._id === action.payload._id)
+                comment.content = action.payload.content
+            })
     }
 })
 

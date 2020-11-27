@@ -7,29 +7,30 @@ import commentReducer from './reducers/commentReducer'
 import messageReducer from './reducers/messageReducer'
 import userReducer from './reducers/userReducer'
 
-// Can read from local store
-// const preloadedState = {
-//     comments:[],
-//     user:{username:"Fake user", access_token:"token_string"}
-// }
+/*Can read from local store
+const preloadedState = {
+    comments:[],
+    user:{username:"Fake user", access_token:"token_string"}
+}
 
-// const rootMiddleware = applyMiddleware(thunkMiddleware)
+const rootMiddleware = applyMiddleware(thunkMiddleware)
 
-// const compositeEnhancer = composeWithDevTools (
-//     rootMiddleware
-// )
+const compositeEnhancer = composeWithDevTools (
+    rootMiddleware
+)
 
-// export default createStore(rootReducer, preloadedState, compositeEnhancer)
+export default createStore(rootReducer, preloadedState, compositeEnhancer)*/
 
 
 /* with redux toolkit
 configureStore added thunk, combine reducers and comoposited evTools and add more middlewares
 for preent mutatios in state and etc
 too install -> redux redux-thunk reselect*/
+
 export default configureStore({
-    reducer:{
+    reducer: {
         comments: commentReducer,
         user: userReducer,
-        message:messageReducer
+        message: messageReducer
     }
 })

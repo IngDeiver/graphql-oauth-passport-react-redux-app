@@ -8,12 +8,14 @@ import { Provider } from "react-redux";
 import store from './redux/store'
 import { ApolloProvider } from '@apollo/client';
 import client from './apollo/client'
+import { ToastContainer } from 'react-toastify';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
      <ApolloProvider client={client}>
       <App/>
+      <ToastContainer position="bottom-right" limit={2}/>
      </ApolloProvider>
     </Provider>
   </React.StrictMode>,

@@ -1,3 +1,3 @@
 {
-    "graphql-server":"http://localhost:4000/graphql"
+    "graphql-server":"https://graphql-oauth-server.herokuapp.com/graphql"
 }

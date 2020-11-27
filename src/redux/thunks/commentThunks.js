@@ -31,8 +31,9 @@ marked this request as needing cancelation.
 rejectWithValue: rejectWithValue is a utility function that you can return in your action creator to 
 return a rejected response with a defined payload. It will pass whatever value you give it and return 
 it in the payload of the rejected action.*/
-export const fetchCommentsThunk = createAsyncThunk("comment/fecthComments", async ({ apolloClient}) => {
-        const COMMENTS = gql`
+
+export const fetchCommentsThunk = createAsyncThunk("comment/fecthComments", async ({ apolloClient }) => {
+    const COMMENTS = gql`
             query {
                 getComments {
                     _id
@@ -43,8 +44,8 @@ export const fetchCommentsThunk = createAsyncThunk("comment/fecthComments", asyn
                     }
                 }
             }`;
-        const response = await apolloClient.query({ query: COMMENTS })
-        return response.data.getComments
+    const response = await apolloClient.query({ query: COMMENTS })
+    return response.data.getComments
 })
 
 
@@ -66,8 +67,9 @@ rejectWithValue(errorPayload) will cause the rejected action to use that value a
 The rejectWithValue approach should also be used if your API response "succeeds", but contains some 
 kind of additional error details that the reducer should know about. This is particularly common when 
 expecting field-level validation errors from an API.*/
-export const saveCommentThunk = createAsyncThunk("comment/addComment", async ({ content, apolloClient }) => {   
-        const ADD_COMMENT = gql`
+
+export const saveCommentThunk = createAsyncThunk("comment/addComment", async ({ content, apolloClient }) => {
+    const ADD_COMMENT = gql`
         mutation addComment($comment: InputComment!){
                 addComment(comment:$comment){
                     _id
@@ -79,9 +81,47 @@ export const saveCommentThunk = createAsyncThunk("comment/addComment", async ({ 
                 }
             }
         `;
-        const response = await apolloClient.mutate({
-            mutation: ADD_COMMENT,
-            variables: { comment: { content } }
-        })
-        return response.data.addComment
+    const response = await apolloClient.mutate({
+        mutation: ADD_COMMENT,
+        variables: { comment: { content } }
+    })
+    return response.data.addComment
+})
+
+export const removeCommentThunk = createAsyncThunk("comment/removeComment", async ({ commentId, apolloClient }) => {
+    const REMOVE_COMMENT = gql`
+    mutation deleteComment($id: ID!){
+            deleteComment(id:$id){
+                _id
+                content
+            }
+        }
+    `;
+    const response = await apolloClient.mutate({
+        mutation: REMOVE_COMMENT,
+        variables: { id: commentId }
+    })
+
+    return response.data.deleteComment
+})
+
+export const updateCommentThunk = createAsyncThunk("comment/updateComment", async ({ commentId, content, apolloClient }) => {
+    const UPDATE_COMMENT = gql`
+    mutation updateComment($id: ID!, $comment: InputComment!){
+            updateComment(id: $id, comment: $comment){
+                _id
+                content
+                owner {
+                    username
+                    avatar
+                }
+            }
+        }
+    `;
+    const response = await apolloClient.mutate({
+        mutation: UPDATE_COMMENT,
+        variables: { id: commentId, comment: { content } }
+    })
+
+    return response.data.updateComment
 })

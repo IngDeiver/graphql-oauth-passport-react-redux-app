@@ -7,31 +7,41 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { saveCommentThunk } from '../../redux/thunks/commentThunks'
 import { useApolloClient } from '@apollo/client';
 import { unwrapResult } from '@reduxjs/toolkit'
-import messageAction from '../../redux/actions/messageAction'
+import {throwMessageAction} from '../../redux/actions/messageAction'
+import { createSelector } from 'reselect'
+import notify from '../../util/notify'
 
 export default () => {
     console.log("Render Home.js");
+    // declare hocks
     const apolloClient = useApolloClient()
-
     const dispatch = useDispatch()
 
+    // form
     const initialValues = {
         content: ""
     }
     const form = useForm({ initialValues })
 
-    // selector function
-    const selectCommentsIds = state => state.comments.map(comment => comment._id)
-    const commentsIds = useSelector(selectCommentsIds, shallowEqual)
-
+    // get data used map for pass only id to comment childComponent and avoid re renders all comments
+    const selectCommentIds = createSelector(
+        state => state.comments,
+        comments => comments.map(comment => comment._id)
+    )
+    const commentsIds = useSelector(selectCommentIds)
     const user = useSelector(state => state.user, shallowEqual)
 
+    const message = useSelector(state => state.message, shallowEqual)
+    if (message.type) {
+        notify(message, dispatch)
+    }
 
+    // methods
     const addComment = async () => {
         dispatch(saveCommentThunk({ content: form.fields.content, apolloClient }))
             .then(unwrapResult)
             .then(res => form.setValueToField('content', ''))
-            .catch(err => dispatch(messageAction({ message: `Post error: ${err.message}`, type: "error" })))
+            .catch(err => dispatch(throwMessageAction({ message: `Post error: ${err.message}`, type: "error" })))
     }
 
     return (
@@ -59,18 +69,20 @@ export default () => {
                         </button>
                         </div>
                     )}
-                    <div className="text-center mb-4">
+                    {!user.username && (
+                        <div className="text-center mb-4">
                         <Link to="/login">
                             Login to publish
                         </Link>
                     </div>
+                    )}
                 </div>
                 <div className="comment-list col-12 col-md-8">
                     <div className=" mx-3" >
                         {commentsIds.length == 0 && <p className="text-center mx-5 my-5">
                             No comments, be the first to post something!
                         </p>}
-                        {commentsIds.map((commentId, i) => <Comment key={i} commentId={commentId} />)}
+                        {commentsIds.reverse().map((commentId, i) => <Comment key={i} commentId={commentId} />)}
                     </div>
                 </div>
             </div>
