@@ -1,6 +1,6 @@
-- Fb error: failed to fecth user profile
 - Edit old content
-- Google in prod not work
+- Use environment vars
+- Fb error: failed to fecth user profile
 
 - Push notifications
 - With rest full and sessions
