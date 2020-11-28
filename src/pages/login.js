@@ -84,6 +84,7 @@ const Login = () => {
                                 Login
                             </button>
                             <FacebookLogin
+                                redirectUri="https://graphql-oauth-passport-react-app.ingdeiver.vercel.app/"
                                 appId={facebookId}
                                 autoLoad={false}
                                 fields="name,email,picture"
