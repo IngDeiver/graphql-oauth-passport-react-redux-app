@@ -85,7 +85,7 @@ const Login = () => {
                             </button>
                             <FacebookLogin
                                 disableMobileRedirect={true}
-                                redirectUri="https://graphql-oauth-passport-react-app.ingdeiver.vercel.app/"
+                                redirectUri={document.location.origin}
                                 isMobile={false}
                                 appId={facebookId}
                                 autoLoad={false}
