@@ -19,7 +19,7 @@ const initialValues = {
 }
 
 
-export default () => {
+const Login = () => {
 
     // declare hocks
     const dispatch = useDispatch()
@@ -107,3 +107,5 @@ export default () => {
         </div>
     )
 }
+
+export default Login

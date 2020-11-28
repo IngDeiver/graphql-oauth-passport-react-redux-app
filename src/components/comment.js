@@ -16,7 +16,7 @@ const selectCommentById = (state, commentId) => {
     return state.comments.find(comment => comment._id === commentId)
 }
 
-export default React.memo(({ commentId }) => {
+const Comment =  React.memo(({ commentId }) => {
 
     console.log("Render Comment.js");
     // declare hocks
@@ -68,7 +68,7 @@ export default React.memo(({ commentId }) => {
                         <div className="d-flex flex-column  flex-lg-row">
                             <div className="col-lg-2 my-2 d-flex justify-content-center align-items-center mx-2">
                                 <div>
-                                    <img className="shadow" width="100px" height="100px" style={{ borderRadius: "50%" }} src={comment.owner.avatar ? comment.owner.avatar : "https://st.depositphotos.com/1779253/5140/v/600/depositphotos_51405259-stock-illustration-male-avatar-profile-picture-use.jpg"} />
+                                    <img alt="Avatar of athor" className="shadow" width="100px" height="100px" style={{ borderRadius: "50%" }} src={comment.owner.avatar ? comment.owner.avatar : "https://st.depositphotos.com/1779253/5140/v/600/depositphotos_51405259-stock-illustration-male-avatar-profile-picture-use.jpg"} />
                                 </div>
                             </div>
                             <div className="col-lg-10 my-2">
@@ -130,3 +130,5 @@ export default React.memo(({ commentId }) => {
         </div>
     )
 })
+
+export default Comment

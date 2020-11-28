@@ -11,7 +11,7 @@ import {throwMessageAction} from '../../redux/actions/messageAction'
 import { createSelector } from 'reselect'
 import notify from '../../util/notify'
 
-export default () => {
+const Home = () => {
     console.log("Render Home.js");
     // declare hocks
     const apolloClient = useApolloClient()
@@ -79,7 +79,7 @@ export default () => {
                 </div>
                 <div className="comment-list col-12 col-md-8">
                     <div className=" mx-3" >
-                        {commentsIds.length == 0 && <p className="text-center mx-5 my-5">
+                        {commentsIds.length === 0 && <p className="text-center mx-5 my-5">
                             No comments, be the first to post something!
                         </p>}
                         {commentsIds.reverse().map((commentId, i) => <Comment key={i} commentId={commentId} />)}
@@ -89,3 +89,5 @@ export default () => {
         </div>
     )
 }
+
+export default Home

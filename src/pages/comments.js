@@ -2,7 +2,7 @@ import React from 'react'
 import {useSelector, shallowEqual} from "react-redux"
 import Comment from '../components/comment'
 
-export default () => {
+const Comments = () => {
 
     const user = useSelector(state => state.user, shallowEqual)
     const commentsOfUser = useSelector(state => state.comments.filter(comment => comment.owner.username === user.username), shallowEqual)
@@ -14,3 +14,5 @@ export default () => {
         </div>
     )
 }
+
+export default Comments

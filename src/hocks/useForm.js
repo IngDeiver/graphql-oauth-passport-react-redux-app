@@ -9,7 +9,7 @@ export const useForm = ({initialValues}) => {
 
     const onChange = (e) => {
         const {name, value, type, checked} = e.target
-        setFields({...fields, [name]: type == 'checkbox' ? checked : value})
+        setFields({...fields, [name]: type === 'checkbox' ? checked : value})
     }
 
     const addField = (name, value) => {

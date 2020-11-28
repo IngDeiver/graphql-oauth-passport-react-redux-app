@@ -33,7 +33,7 @@ import { useApolloClient } from '@apollo/client'
 
 
 
-export default () => {
+const App = () => {
     console.log("Render App.js");
     // declare hocks
     const dispatch = useDispatch()
@@ -69,3 +69,5 @@ export default () => {
         </Router>
     )
 }
+
+export default App

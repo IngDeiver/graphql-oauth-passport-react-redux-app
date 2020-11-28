@@ -10,7 +10,7 @@ import {throwMessageAction} from '../redux/actions/messageAction'
 import notify from '../util/notify'
 
 
-export default () => {
+const Register =  () => {
 
     const initialValues = {
         username: "",
@@ -69,3 +69,5 @@ export default () => {
         </div>
     )
 }
+
+export default Register

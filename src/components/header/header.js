@@ -8,7 +8,7 @@ import {throwMessageAction} from '../../redux/actions/messageAction'
 
 
 
-export default () => {
+const Header = () => {
     console.log("Render Header.js");
 
     // declare hocks
@@ -70,3 +70,4 @@ export default () => {
         </>
     )
 }
+export default Header

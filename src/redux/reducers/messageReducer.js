@@ -1,7 +1,7 @@
 import {MESSAGE_THROW, CLEAR_MESSAGE} from '../types/messageType'
 
 const initialState = {}
-export default (state = initialState, {type, payload}) => {
+const messageReduer =  (state = initialState, {type, payload}) => {
     switch(type){
         case MESSAGE_THROW : {
             return {
@@ -17,3 +17,5 @@ export default (state = initialState, {type, payload}) => {
             return state
     }
 }
+
+export default messageReduer
