@@ -84,8 +84,6 @@ const Login = () => {
                                 Login
                             </button>
                             <FacebookLogin
-                                disableMobileRedirect={true}
-                                redirectUri={document.location.origin}
                                 isMobile={false}
                                 appId={facebookId}
                                 autoLoad={false}
