@@ -17,8 +17,6 @@ const selectCommentById = (state, commentId) => {
 }
 
 const Comment =  React.memo(({ commentId }) => {
-
-    console.log("Render Comment.js");
     // declare hocks
     const apolloClient = useApolloClient()
     const dispatch = useDispatch()

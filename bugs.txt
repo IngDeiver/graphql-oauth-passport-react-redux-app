@@ -1,5 +1,6 @@
-- Multiples fu** messages
+- Fb error: failed to fecth user profile
 - Edit old content
+- Google in prod not work
 
 - Push notifications
 - With rest full and sessions

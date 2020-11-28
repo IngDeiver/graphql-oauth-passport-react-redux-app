@@ -34,7 +34,6 @@ import { useApolloClient } from '@apollo/client'
 
 
 const App = () => {
-    console.log("Render App.js");
     // declare hocks
     const dispatch = useDispatch()
     const apolloClient = useApolloClient()

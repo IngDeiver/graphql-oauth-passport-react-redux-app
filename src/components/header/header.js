@@ -9,7 +9,6 @@ import {throwMessageAction} from '../../redux/actions/messageAction'
 
 
 const Header = () => {
-    console.log("Render Header.js");
 
     // declare hocks
     let location = useLocation();

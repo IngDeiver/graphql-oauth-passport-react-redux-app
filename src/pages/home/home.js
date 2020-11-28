@@ -49,7 +49,7 @@ const Home = () => {
             <div className="d-flex flex-column flex-md-row position-relative">
                 <div className="comment-input col-12 col-md-4">
                     <h3 className="text-center text-muted mb-2">
-                        Welcome! Username
+                    ! Welcome {user.username ? user.username : ""}!
                                 </h3>
                     <p className="text-muted text-center my-3">
                         Comment on what you think about this OAuth 2.0 implementation.
