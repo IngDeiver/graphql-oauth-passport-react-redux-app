@@ -84,9 +84,6 @@ const Login = () => {
                                 Login
                             </button>
                             <FacebookLogin
-                                disableMobileRedirect={true}
-                                redirectUri="https://graphql-oauth-passport-react-app.ingdeiver.vercel.app/"
-                                isMobile={false}
                                 appId={facebookId}
                                 autoLoad={false}
                                 fields="name,email,picture"
@@ -94,8 +91,6 @@ const Login = () => {
                                 icon="fa-facebook"
                                 size="small" />
                             <GoogleLogin
-                                disableMobileRedirect={true}
-                                isMobile={false}
                                 className="mt-2"
                                 clientId={googleId}
                                 autoLoad={false}
