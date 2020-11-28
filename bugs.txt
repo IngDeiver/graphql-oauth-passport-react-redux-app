@@ -1,4 +1,3 @@
-- Edit old content
 - Use environment vars
 - Fb error: failed to fecth user profile
 

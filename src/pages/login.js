@@ -11,7 +11,6 @@ import { useApolloClient } from '@apollo/client';
 import { unwrapResult } from '@reduxjs/toolkit'
 import {createLocalAuth} from '../util/authUtil'
 import notify from '../util/notify'
-const { googleId, facebookId } = require("../config/oauthCredentials.json")
 
 const initialValues = {
     username: "",
@@ -87,7 +86,7 @@ const Login = () => {
                                 disableMobileRedirect={true}
                                 redirectUri={document.location.origin}
                                 isMobile={false}
-                                appId={facebookId}
+                                appId={process.env.REACT_APP_FACEBOOK_ID}
                                 autoLoad={false}
                                 fields="name,email,picture"
                                 callback={responseFacebook}
@@ -95,7 +94,7 @@ const Login = () => {
                                 size="small" />
                             <GoogleLogin
                                 className="mt-2"
-                                clientId={googleId}
+                                clientId={process.env.REACT_APP_GOOGLE_ID}
                                 autoLoad={false}
                                 onSuccess={successGoogle}
                                 onFailure={failureGoogle}

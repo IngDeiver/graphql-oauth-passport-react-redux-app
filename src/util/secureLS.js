@@ -1,4 +1,3 @@
 import SecureLS from 'secure-ls'
-import secrets from "../config/secrets.json";
 
-export default new SecureLS({encodingType: 'aes', encryptionSecret:secrets["ls-secret"]})
+export default new SecureLS({encodingType: 'aes', encryptionSecret: process.env.REACT_APP_LS_SECRET})
