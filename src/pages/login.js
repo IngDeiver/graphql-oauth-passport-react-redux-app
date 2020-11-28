@@ -84,7 +84,9 @@ const Login = () => {
                                 Login
                             </button>
                             <FacebookLogin
-                                isMobile={false}
+                                // disableMobileRedirect={true}
+                                redirectUri={document.location.origin}
+                                // isMobile={false}
                                 appId={facebookId}
                                 autoLoad={false}
                                 fields="name,email,picture"
@@ -92,7 +94,8 @@ const Login = () => {
                                 icon="fa-facebook"
                                 size="small" />
                             <GoogleLogin
-                                isMobile={false}
+                                redirectUri={document.location.origin}
+                                // isMobile={false}
                                 className="mt-2"
                                 clientId={googleId}
                                 autoLoad={false}
