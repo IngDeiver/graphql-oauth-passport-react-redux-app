@@ -15,4 +15,4 @@ I developed this application mainly for two reasons, to put into practice user a
 ![Login page](https://firebasestorage.googleapis.com/v0/b/files-service.appspot.com/o/images%2FOauth%20client%20react%20app%20login%20image.png?alt=media&token=83b7da3e-9075-499b-97fa-c6b6a01d53de)
 
 ### Home
-![Home](https://firebasestorage.googleapis.com/v0/b/files-service.appspot.com/o/images%2FOauth%20client%20react%20app%20home%20image.png?alt=media&token=e2dc7fd9-ba33-43fa-9d5d-85185ff97693)
+![Home](https://firebasestorage.googleapis.com/v0/b/files-service.appspot.com/o/images%2FOauth%20client%20react%20app%20home%20image.png?alt=media&token=7db235fa-7419-4a9e-b63b-c490b4f3aecd)
