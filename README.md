@@ -1,5 +1,5 @@
 # graphql-oauth-passport-react-app
-Graphql-oauth-passport-react-app is developed on React.js following the patterns and standards recommended by Redux, in addition this application consumes a GraphQL API that I previously developed with express, apollo GraphQL server and Passport.js which allows authentication without status, you can view the demo [here] (https://graphql-oauth-server.herokuapp.com/graphql) and leave your star in this [repository 😆] (https://github.com/IngDeiver/passport-oauth -graphql-server).
+Graphql-oauth-passport-react-app is developed on React.js following the patterns and standards recommended by Redux, in addition this application consumes a GraphQL API that I previously developed with express, apollo GraphQL server and Passport.js which allows authentication without status, you can view the demo [here](https://graphql-oauth-server.herokuapp.com/graphql) and leave your star in this [repository 😆](https://github.com/IngDeiver/passport-oauth-graphql-server).
 I developed this application mainly for two reasons, to put into practice user authentication knowledge with Google, Facebook and by username / password and to provide the community with an implementation that will surely be useful in their projects 📕, so feel free to use this implementation as you like.
 
 ## Characteristics
